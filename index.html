@@ -19,7 +19,8 @@
 
   <link rel="icon" href="/favicon.ico" />
 
-  <link rel="preload" as="image" href="/images/hero-desktop.webp" />
+  <link rel="preload" as="image" href="/images/hero-desktop.webp" media="(min-width: 769px)" />
+  <link rel="preload" as="image" href="/images/hero-mobile.webp" media="(max-width: 768px)" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -140,13 +141,16 @@
 <body>
   <a href="/about" class="nav-link">about</a>
   <main class="hero">
-    <img
-      class="hero-image"
-      src="/images/hero-desktop.webp"
-      alt="Kate Wozi"
-      decoding="async"
-      fetchpriority="high"
-    />
+    <picture>
+      <source srcset="/images/hero-mobile.webp" media="(max-width: 768px)" />
+      <img
+        class="hero-image"
+        src="/images/hero-desktop.webp"
+        alt="Kate Wozi"
+        decoding="async"
+        fetchpriority="high"
+      />
+    </picture>
     <div class="hero-overlay"></div>
     <div class="hero-content">
       <h1 class="name"><span id="typed"></span><span class="cursor" aria-hidden="true">|</span></h1>
