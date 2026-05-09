@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>kate wozi</title>
+  <meta name="description" content="kate wozi — personal site" />
+
+  <meta property="og:title" content="kate wozi" />
+  <meta property="og:description" content="kate wozi — personal site" />
+  <meta property="og:image" content="https://katewozi.com/images/hero-desktop.webp" />
+  <meta property="og:url" content="https://katewozi.com" />
+  <meta property="og:type" content="website" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="kate wozi" />
+  <meta name="twitter:description" content="kate wozi — personal site" />
+  <meta name="twitter:image" content="https://katewozi.com/images/hero-desktop.webp" />
+
+  <link rel="icon" href="/favicon.ico" />
+
+  <link rel="preload" as="image" href="/images/hero-desktop.webp" media="(min-width: 769px)" />
+  <link rel="preload" as="image" href="/images/hero-mobile.webp" media="(max-width: 768px)" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&display=swap" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; height: 100%; }
+
+    body {
+      background: #000;
+      color: #fff;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      overflow: hidden;
+    }
+
+    .hero {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      height: 100dvh;
+    }
+
+    .hero-image {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 800ms ease-in;
+      z-index: 0;
+    }
+
+    .hero-image.loaded { opacity: 1; }
+
+    .hero-overlay {
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.30),
+        rgba(0, 0, 0, 0.50)
+      );
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      padding: 0 1rem;
+    }
+
+    .name {
+      margin: 0;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-weight: 500;
+      color: #fff;
+      letter-spacing: 0.04em;
+      line-height: 1;
+      text-align: center;
+      font-size: clamp(3.5rem, 8vw, 11rem);
+      white-space: nowrap;
+    }
+
+    @media (max-width: 768px) {
+      .name { font-size: clamp(3rem, 14vw, 7rem); }
+    }
+
+    .cursor {
+      display: inline-block;
+      margin-left: 0.04em;
+      font-weight: 300;
+      animation: blink 1s steps(2, start) infinite;
+    }
+
+    @keyframes blink {
+      to { visibility: hidden; }
+    }
+
+    .nav-link {
+      position: fixed;
+      top: 1.5rem;
+      right: 2rem;
+      z-index: 3;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-style: italic;
+      font-size: 1.125rem;
+      letter-spacing: 0.05em;
+      color: rgba(255, 255, 255, 0.75);
+      text-decoration: none;
+      transition: color 300ms ease;
+      animation: nav-fade-in 600ms ease-out 2000ms both;
+    }
+
+    .nav-link:hover,
+    .nav-link:focus-visible { color: #fff; outline: none; }
+
+    @keyframes nav-fade-in {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    @media (max-width: 768px) {
+      .nav-link { top: 1.25rem; right: 1.25rem; font-size: 1rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hero-image { transition: none; opacity: 1; }
+      .cursor { animation: none; }
+      .nav-link { animation: none; }
+    }
+  </style>
+</head>
+<body>
+  <a href="/about" class="nav-link">about</a>
+  <main class="hero">
+    <picture>
+      <source srcset="/images/hero-mobile.webp" media="(max-width: 768px)" />
+      <img
+        class="hero-image"
+        src="/images/hero-desktop.webp"
+        alt="Kate Wozi"
+        decoding="async"
+        fetchpriority="high"
+      />
+    </picture>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1 class="name"><span id="typed"></span><span class="cursor" aria-hidden="true">|</span></h1>
+    </div>
+  </main>
+
+  <script>
+    (function () {
+      var TEXT = 'kate wozi';
+      var TYPE_SPEED = 150;
+      var INITIAL_DELAY = 400;
+
+      var typed = document.getElementById('typed');
+      var heroImage = document.querySelector('.hero-image');
+      var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      if (heroImage.complete && heroImage.naturalWidth > 0) {
+        heroImage.classList.add('loaded');
+      } else {
+        heroImage.addEventListener('load', function () {
+          heroImage.classList.add('loaded');
+        });
+        heroImage.addEventListener('error', function () {
+          heroImage.classList.add('loaded');
+        });
+      }
+
+      if (reduceMotion) {
+        typed.textContent = TEXT;
+        return;
+      }
+
+      var i = 0;
+      function typeNext() {
+        if (i < TEXT.length) {
+          typed.textContent += TEXT.charAt(i);
+          i++;
+          setTimeout(typeNext, TYPE_SPEED);
+        }
+      }
+      setTimeout(typeNext, INITIAL_DELAY);
+    })();
+  </script>
+</body>
+</html>
