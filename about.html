@@ -19,8 +19,7 @@
 
   <link rel="icon" href="/favicon.ico" />
 
-  <link rel="preload" as="image" href="/images/about-desktop.webp" media="(min-width: 769px)" />
-  <link rel="preload" as="image" href="/images/about.webp" media="(max-width: 768px)" />
+  <link rel="preload" as="image" href="/images/about-desktop.webp" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -62,18 +61,10 @@
     }
 
     .about-image {
-      width: min(100vw, calc(100dvh * 9 / 16));
-      aspect-ratio: 9 / 16;
+      width: 100vw;
+      height: 100vh;
+      height: 100dvh;
       background: #1a1a1a;
-    }
-
-    @media (min-width: 769px) {
-      .about-image {
-        width: 100vw;
-        height: 100vh;
-        height: 100dvh;
-        aspect-ratio: auto;
-      }
     }
 
     .about-image img {
@@ -114,10 +105,7 @@
   <main class="about">
     <h1 class="visually-hidden">about</h1>
     <div class="about-image">
-      <picture>
-        <source srcset="/images/about-desktop.webp" media="(min-width: 769px)" />
-        <img src="/images/about.webp" alt="Kate Wozi" decoding="async" />
-      </picture>
+      <img src="/images/about-desktop.webp" alt="Kate Wozi" decoding="async" />
     </div>
   </main>
 
