@@ -26,6 +26,8 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tangerine:wght@400;700&display=swap" />
 
   <style>
+    @view-transition { navigation: auto; }
+
     *, *::before, *::after { box-sizing: border-box; }
     html, body { margin: 0; padding: 0; }
 
@@ -78,6 +80,8 @@
 
     .about-image img.loaded { opacity: 1; }
 
+    html.from-internal .about-image img { opacity: 1; transition: none; }
+
     .visually-hidden {
       position: absolute;
       width: 1px;
@@ -98,6 +102,11 @@
       .about-image img { transition: none; opacity: 1; }
     }
   </style>
+  <script>
+    if (document.referrer && new URL(document.referrer).origin === location.origin) {
+      document.documentElement.classList.add('from-internal');
+    }
+  </script>
 </head>
 <body>
   <a href="/" class="nav-link">← back</a>
