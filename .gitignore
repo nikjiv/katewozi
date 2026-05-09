@@ -9,3 +9,7 @@ node_modules/
 .vercel
 .cache
 *.log
+
+# PNG sources for the hero/about images — only the converted .webp versions are deployed.
+# Keep the PNGs on disk locally so they can be re-encoded, but don't ship them.
+images/*.png
